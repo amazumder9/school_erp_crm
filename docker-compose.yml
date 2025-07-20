@@ -1,0 +1,212 @@
+version: '3.8'
+
+services:
+  user-access-management:
+    build: ./services/user-access-management
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=user_access_db
+      - DB_PORT=5432
+      - DB_NAME=user_access
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_pass
+    depends_on:
+      - user_access_db
+
+  admission-onboarding:
+    build: ./services/admission-onboarding
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=admission_onboarding_db
+      - DB_PORT=5432
+      - DB_NAME=admission_onboarding
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_pass
+    depends_on:
+      - admission_onboarding_db
+
+  scheduling-attendance:
+    build: ./services/scheduling-attendance
+    ports:
+      - "8083:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=scheduling_attendance_db
+      - DB_PORT=5432
+      - DB_NAME=scheduling_attendance
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_pass
+    depends_on:
+      - scheduling_attendance_db
+
+  fees-finance:
+    build: ./services/fees-finance
+    ports:
+      - "8084:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=fees_finance_db
+      - DB_PORT=5432
+      - DB_NAME=fees_finance
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_pass
+    depends_on:
+      - fees_finance_db
+
+  academic-management:
+    build: ./services/academic-management
+    ports:
+      - "8085:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=academic_management_db
+      - DB_PORT=5432
+      - DB_NAME=academic_management
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_pass
+    depends_on:
+      - academic_management_db
+
+  notification-event:
+    build: ./services/notification-event
+    ports:
+      - "8086:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=notification_event_db
+      - DB_PORT=5432
+      - DB_NAME=notification_event
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_pass
+    depends_on:
+      - notification_event_db
+
+  tenant-management:
+    build: ./services/tenant-management
+    ports:
+      - "8087:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=tenant_management_db
+      - DB_PORT=5432
+      - DB_NAME=tenant_management
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_pass
+    depends_on:
+      - tenant_management_db
+
+  authorization-service:
+    build: ./services/authorization-service
+    ports:
+      - "8088:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=authorization_service_db
+      - DB_PORT=5432
+      - DB_NAME=authorization_service
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_pass
+    depends_on:
+      - authorization_service_db
+
+  user_access_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: user_access
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_access_data:/var/lib/postgresql/data
+
+  admission_onboarding_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: admission_onboarding
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - admission_onboarding_data:/var/lib/postgresql/data
+
+  scheduling_attendance_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: scheduling_attendance
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+    ports:
+      - "5435:5432"
+    volumes:
+      - scheduling_attendance_data:/var/lib/postgresql/data
+
+  fees_finance_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: fees_finance
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+    ports:
+      - "5436:5432"
+    volumes:
+      - fees_finance_data:/var/lib/postgresql/data
+
+  academic_management_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: academic_management
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+    ports:
+      - "5437:5432"
+    volumes:
+      - academic_management_data:/var/lib/postgresql/data
+
+  notification_event_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: notification_event
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+    ports:
+      - "5438:5432"
+    volumes:
+      - notification_event_data:/var/lib/postgresql/data
+
+  tenant_management_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: tenant_management
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+    ports:
+      - "5439:5432"
+    volumes:
+      - tenant_management_data:/var/lib/postgresql/data
+
+  authorization_service_db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: authorization_service
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_pass
+    ports:
+      - "5440:5432"
+    volumes:
+      - authorization_service_data:/var/lib/postgresql/data
+
+volumes:
+  user_access_data:
+  admission_onboarding_data:
+  scheduling_attendance_data:
+  fees_finance_data:
+  academic_management_data:
+  notification_event_data:
+  tenant_management_data:
+  authorization_service_data:
